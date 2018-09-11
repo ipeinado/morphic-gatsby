@@ -5,11 +5,12 @@ exports.onCreateNode = ({ node, boundActionCreators }) => {
 	const { createNodeField } = boundActionCreators;
 	if (node.internal.type === "node__page") {
 		const slug = `/pages/${node.nid}`;
+		console.log(node)
 		createNodeField({
 			node,
 			name: `slug`,
 			value: slug,
-		});
+		})
 	}
 }
 

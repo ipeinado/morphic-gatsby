@@ -4,6 +4,7 @@ module.exports = {
   },
   plugins: [
   	'gatsby-plugin-react-helmet',
+    'gatsby-plugin-glamor',
   	{
   		resolve: 'gatsby-source-drupal',
   		options: {
@@ -11,5 +12,11 @@ module.exports = {
   			apiBase: 'jsonapi',
   		},
   	},
+    {
+      resolve: 'gatsby-plugin-typography',
+      options: {
+        pathToConfigModule: `src/utils/typography.js`,
+      },
+    },
   ],
 }
