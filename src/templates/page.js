@@ -16,13 +16,13 @@ const PageTemplate = ({ data }) => (
 export default PageTemplate;
 
 export const query = graphql`
-	query PageQuery($slug: String!) {
-		page: nodePage(fields: { slug: { eq: $slug }}) {
+	query PageQuery($alias: String!) {
+		page: nodePage(path: { alias: { eq: $alias }}) {
 			title
 			body {
 				processed
 				value
 			}
-		}
+		} 
 	}
 `;

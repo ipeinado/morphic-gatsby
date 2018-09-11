@@ -3,9 +3,8 @@ const path = require('path');
 exports.onCreateNode = ({ node, boundActionCreators }) => {
 	// console.log(node.internal.type);
 	const { createNodeField } = boundActionCreators;
-	if (node.internal.type === "node__page") {
-		const slug = `/pages/${node.nid}`;
-		console.log(node)
+	if (node.internal.type === "node__article") {
+		const slug = `/help/${node.nid}`
 		createNodeField({
 			node,
 			name: `slug`,
@@ -20,7 +19,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 	const { createPage } = boundActionCreators;
 
 	return new Promise((resolve, reject) => {
-		const pageTemplate = path.resolve('src/templates/page.js');
+		const pageTemplate = path.resolve('src/templates/page.js')
+		const articleTemplate = path.resolve('src/templates/article.js')
+
 		resolve(
 			graphql(
 				`
@@ -28,7 +29,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 						pages: allNodePage {
 							edges {
 								node {
-									nid
+									path {
+										alias
+									}
+								}
+							}
+						}
+						articles: allNodeArticle {
+							edges {
+								node {
 									fields {
 										slug
 									}
@@ -40,15 +49,24 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 			).then(result => {
 				result.data.pages.edges.forEach(({ node }) => {
 					createPage({
-						path: node.fields.slug,
+						path: node.path.alias,
 						component: pageTemplate,
+						context: {
+							alias: node.path.alias,
+						},
+					})
+				})
+				result.data.articles.edges.forEach(({ node }) => {
+					createPage({
+						path: node.fields.slug,
+						component: articleTemplate,
 						context: {
 							slug: node.fields.slug,
 						},
-					});
-				});
+					})
+				})
 				resolve()
 			})
-		);
-	});
-};
+		)
+	})
+}

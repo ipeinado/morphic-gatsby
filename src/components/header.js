@@ -129,10 +129,10 @@ class Header extends React.Component {
 	    				},
 	    			}}>
 	    				<li>
-	    					<Link to='/pages/1'>About</Link>
+	    					<Link to='/about'>About</Link>
 	    				</li>
 	    				<li>
-	    					<Link to='/pages/10'>Help and Learning</Link>
+	    					<Link to='/help/qsshelp'>Help and Learning</Link>
 	    				</li>
 	    			</ul>
 	    		</div>
